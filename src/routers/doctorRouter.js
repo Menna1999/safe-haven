@@ -10,7 +10,7 @@ const {
   validateUserIdBody,
 } = require('../middleware/requestValidator');
 router.post(
-  'selectAvaiableSlots',
+  '/selectAvaiableSlots',
   auth,
   validateUserIdBody,
   validateRequest,
@@ -18,7 +18,7 @@ router.post(
 );
 
 router.get(
-  'viewUpcomingSessions',
+  '/viewUpcomingSessions',
   auth,
   validateUserIdBody,
   validateRequest,

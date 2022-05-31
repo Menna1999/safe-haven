@@ -19,7 +19,7 @@ router.post(
 );
 
 router.get(
-  'viewDoctorSlots',
+  '/viewDoctorSlots',
   auth,
   validateUserIdBody,
   validateRequest,
@@ -27,7 +27,7 @@ router.get(
 );
 
 router.get(
-  'viewUpcomingSessions',
+  '/viewUpcomingSessions',
   auth,
   validateUserIdBody,
   validateRequest,

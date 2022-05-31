@@ -9,13 +9,13 @@ const {
 } = require('../middleware/requestValidator');
 
 router.post(
-  'patientLink',
+  '/patientLink',
   validateRequest,
   appointmentController.sendLinkToPatient
 );
 
 router.get(
-  'doctorLink',
+  '/doctorLink',
   validateRequest,
   appointmentController.sendLinkToDoctor
 );
