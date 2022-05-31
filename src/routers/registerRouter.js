@@ -27,10 +27,10 @@ router.post(
 );
 
 router.post(
-    '/signIn', 
+    '/patientSignIn', 
     validateLogIn, 
     validateRequest, 
-    registerController.signIn
+    registerController.patientSignIn
     );
 
 router.post(
@@ -46,17 +46,4 @@ router.post(
     validateRequest, 
     registerController.changePassword);
 
-router.post(
-    '/forgotPassword', 
-    validateUserEmailBody, 
-    validateRequest, 
-    registerController.forgotPassword
-    );
-
-router.post(
-    '/resetPassword', 
-    validateResetPassword, 
-    validateRequest, 
-    registerController.resetPassword
-    );
 module.exports = router;
