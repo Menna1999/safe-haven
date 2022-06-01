@@ -13,24 +13,35 @@ const {
 router.post(
   '/rateDoctor',
   auth,
-  validateUserIdBody,
   validateRequest,
   patientController.rateDoctor
 );
 
 router.get(
-  '/viewDoctorSlots',
+  '/viewDoctorBusySlots',
   auth,
-  validateUserIdBody,
   validateRequest,
-  patientController.viewDoctorSlots
+  patientController.viewDoctorBusySlots
 );
 
 router.get(
   '/viewUpcomingSessions',
   auth,
-  validateUserIdBody,
   validateRequest,
   patientController.viewUpcomingSessions
+);
+
+router.post(
+  '/bookSession',
+  auth,
+  validateRequest,
+  patientController.bookSession
+);
+
+router.post(
+  '/cancelSession',
+  auth,
+  validateRequest,
+  patientController.cancelSession
 );
 module.exports = router;

@@ -6,6 +6,7 @@ const schema = mongoose.Schema;
 const slotSchema = new mongoose.Schema({
     dID: { type: mongoose.SchemaTypes.ObjectId , ref: 'Doctor' },    
     date: { type: Date }, 
+    doctorBusy: {type: Boolean},
     booked: {type: Boolean}
 },{
     timestamps: true,

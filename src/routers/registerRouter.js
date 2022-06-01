@@ -7,31 +7,38 @@ const {auth} = require('../middleware/authentication');
 const {
     validateChangePassword,
     validateRequest,
-    validateSignUp,
-    validateLogIn,
+    validateDoctorSignUp,
+    validatePatientSignUp,
+    validateSignIn,
     validateUserEmailBody,
-    validateResetPassword
 } = require('../middleware/requestValidator');
 
 router.post(
     '/patientSignUp',
-    validateSignUp,
+    validatePatientSignUp,
     validateRequest,
     registerController.patientSignUp
 );
 router.post(
   '/doctorSignUp',
-  validateSignUp,
+  validateDoctorSignUp,
   validateRequest,
   registerController.doctorSignUp
 );
 
 router.post(
     '/patientSignIn', 
-    validateLogIn, 
+    validateSignIn, 
     validateRequest, 
     registerController.patientSignIn
     );
+
+router.post(
+  '/doctorSignIn', 
+  validateSignIn, 
+  validateRequest, 
+  registerController.doctorSignIn
+  );
 
 router.post(
     '/logout', 

@@ -38,12 +38,17 @@ app.use('/appointment', appointmentRouter);
 
 const uri = process.env.ATLAS_URI;
 console.log(uri)
-mongoose.connect(uri , {useNewUrlParser: true});
-
-const connection = mongoose.connection;
-connection.once('open' , () => {
-    console.log("MongoDB database connection established successfully");
-})
+//mongoose.connect(uri , {useNewUrlParser: true});
+mongoose.connect(process.env.ATLAS_URI, {
+  useNewUrlParser: true,
+}).then(async() => {
+console.log('Database Connected');}).catch((err)=>{
+    console.log(err.message)
+});
+// const connection = mongoose.connection;
+// connection.once('open' , () => {
+//     console.log("MongoDB database connection established successfully");
+// })
 
 app.use('*', (req, res) => {
     throw new NotFound();
