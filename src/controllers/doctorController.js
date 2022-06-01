@@ -92,7 +92,47 @@ module.exports.selectBusySlots = async(req,res)=>{
   }
   res.send();
 }
+module.exports.selectBusySlotsStartEnd = async(req,res)=>{
+  
+  const dates = req.body.dates;
+  const doctor = req.doctor;
+  const dID = doctor._id;
+  const booked = false;
+  const doctorBusy = true;
+  console.log(dates.length);
+  var createdSlotIds = [];
+  for(let i =0; i<dates.length; i++){
+    const startDate = new Date(dates[i].start);
+    const endDate = new Date(dates[i].end);
+    const startHour = startDate.getHours();
+    const endHour = endDate.getHours();
 
+    const year = startDate.getFullYear();
+    const month = startDate.getMonth();
+    const day = startDate.getDate();
+    const hour = startDate.getHours();
+    const date = new Date();
+    date.setFullYear(year);
+    date.setMonth(month);
+    date.setDate(day);
+
+    for(let j=0; j< endHour-startHour; j++){
+      
+      date.setHours(hour+j);
+      const slots = await Slot.find({date:date, dID:dID});
+      if(slots[0] != undefined) throw new LogicError(403, 'Slot already exists');
+      const newSlot = await Slot.create({
+        dID,
+        date,
+        doctorBusy,
+        booked
+      });
+      createdSlotIds.push(newSlot._id);
+    }
+    
+  }
+  res.send(createdSlotIds);
+}
 module.exports.freeSlots = async(req,res)=>{
   
   const dates = req.body.dates;
@@ -109,4 +149,19 @@ module.exports.freeSlots = async(req,res)=>{
     }
   }
   res.send("Slots freed up successfully");
+}
+
+module.exports.viewUnavailableSlots = async(req,res)=>{
+  const doctor = req.doctor
+  //Retrieve all slots with doctor Id
+  const slots = await Slot.find({dID: doctor._id});
+  if(slots[0] == undefined) throw new LogicError(404, 'No slots found')
+  var unavailableSlotDates = []; 
+  for(let i=0; i<slots.length; i++){
+    if(slots[i].booked == true || slots[i].doctorBusy == true){
+      unavailableSlotDates.push(slots[i].date);
+    }
+  }
+ //Return slots that are unavailable
+  res.send(unavailableSlotDates);
 }

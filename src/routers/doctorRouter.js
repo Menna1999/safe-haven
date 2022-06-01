@@ -29,10 +29,24 @@ router.post(
   doctorController.selectBusySlots
 );
 
+router.post(
+  '/selectBusySlotsRange',
+  auth,
+  validateRequest,
+  doctorController.selectBusySlotsStartEnd
+);
+
 router.get(
   '/viewUpcomingSessions',
   auth,
   validateRequest,
   doctorController.viewUpcomingSessions
+);
+
+router.get(
+  '/viewUnavailableSlots',
+  auth,
+  validateRequest,
+  doctorController.viewUnavailableSlots
 );
 module.exports = router;

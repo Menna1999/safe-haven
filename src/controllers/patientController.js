@@ -63,21 +63,21 @@
   res.send("Doctor Rated Successfully");
  }
 
- module.exports.viewDoctorBusySlots = async(req,res)=>{
+ module.exports.viewUnavailableSlots = async(req,res)=>{
   const doctorId = req.body.doctorId;
   const doctor = await Doctor.findById(doctorId);
   if(!doctor) throw new LogicError(404, 'Doctor not found')
   //Retrieve all slots with doctor Id
   const slots = await Slot.find({dID: doctorId});
   if(slots[0] == undefined) throw new LogicError(404, 'No slots found')
-  var bookedSlotDates = []; 
+  var unavailableSlotDates = []; 
   for(let i=0; i<slots.length; i++){
     if(slots[i].booked == true || slots[i].doctorBusy == true){
-      bookedSlotDates.push(slots[i].date);
+      unavailableSlotDates.push(slots[i].date);
     }
   }
- //Return slots that arent booked
-  res.send(bookedSlotDates);
+ //Return slots that are unavailable
+  res.send(unavailableSlotDates);
 }
 
 module.exports.bookSession = async(req,res)=>{
@@ -112,7 +112,7 @@ module.exports.cancelSession = async(req,res)=>{
   const patient = req.patient;
   if(!patient) throw new LogicError(404, "Patient not found")
   const dID = req.body.doctorId;
-  const date = req.body.date;
+  const date = req.body.date; 
   //Retrieve all slots with doctor Id and chosen date
   const slots = await Slot.find({dID: dID, date:date}); 
   console.log(slots[0]);

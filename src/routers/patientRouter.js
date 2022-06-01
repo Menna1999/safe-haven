@@ -18,10 +18,10 @@ router.post(
 );
 
 router.get(
-  '/viewDoctorBusySlots',
+  '/viewUnavailableSlots',
   auth,
   validateRequest,
-  patientController.viewDoctorBusySlots
+  patientController.viewUnavailableSlots
 );
 
 router.get(
